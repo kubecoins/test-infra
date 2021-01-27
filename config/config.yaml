@@ -99,3 +99,5 @@ tide:
         - do-not-merge/hold
         - do-not-merge/invalid-owners-file
         - do-not-merge/work-in-progress
+        - needs-rebase
+        - do-not-merge/release-note-label-needed

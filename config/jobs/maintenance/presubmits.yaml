@@ -7,7 +7,8 @@ presubmits:
     spec:
       containers:
       - command:
-        - exit
+        - echo
+        - "Prow Works"
         env:
         - name: AWS_REGION
           value: eu-west-2

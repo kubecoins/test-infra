@@ -34,6 +34,10 @@ prow:
 prow-s3-credentials:
 	kubectl create secret generic s3-credentials --from-file=service-account.json=./out/service-account.json --dry-run=client -o yaml | kubectl replace secret s3-credentials -f -
 
+prow-s3-credentials-test-pods:
+	kubectl -n test-pods create secret generic s3-credentials --from-file=service-account.json=./out/service-account.json --dry-run=client -o yaml | kubectl -n test-pods replace secret s3-credentials -f -
+	
+
 
 #### Terraform #####
 
