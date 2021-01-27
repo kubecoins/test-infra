@@ -62,7 +62,7 @@ branch-protection:
     strict: false # we don't want to block any PR if it's not up to date, we have the rebase merge strategy and needs-rebase plugin
   orgs:
     kubecoins:
-      protect: true
+      #protect: true - apply to all branches
       # required_status_checks:
       #   contexts:
       #     - dco
