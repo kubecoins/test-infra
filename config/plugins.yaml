@@ -3,7 +3,7 @@
 triggers:
 - repos:
   - kubecoins
-  join_org_url: "https://git.k8s.io/community/community-membership.md#member"
+  join_org_url: "https://github.com/kubecoins/test-infra/blob/main/README.md"
   only_org_members: true
 
 approve:
