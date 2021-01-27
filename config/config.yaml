@@ -70,7 +70,7 @@ branch-protection:
       repos:
         test-infra:
           branches:
-            master:
+            main:
               protect: true
 
 log_level: debug

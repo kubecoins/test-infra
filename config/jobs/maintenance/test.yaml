@@ -1,8 +1,17 @@
-periodics:
-- interval: 10m
-  name: echo-test
-  decorate: true
-  spec:
-    containers:
-    - image: alpine
-      command: ["/bin/date"]
+presubmits:
+  kubecoins/test-infra:
+  - name: echo-hi
+    decorate: true
+    skip_report: false
+    agent: kubernetes
+    branches:
+      - ^main$
+    spec:
+      containers:
+      - command:
+        - exit
+        env:
+        - name: AWS_REGION
+          value: eu-west-2
+        image: debian:buster
+        imagePullPolicy: Always

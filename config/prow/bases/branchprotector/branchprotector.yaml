@@ -40,7 +40,7 @@ metadata:
   namespace: default
   name: branchprotector
 spec:
-  schedule: "*/10 * * * *" #"30 * * * *" # Every hour at 30 minutes past the hour
+  schedule: "30 * * * *" # Every hour at 30 minutes past the hour
   concurrencyPolicy: Forbid
   jobTemplate:
     metadata:
