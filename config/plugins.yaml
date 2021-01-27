@@ -1,0 +1,55 @@
+# Plugin configuration
+---
+triggers:
+- repos:
+  - kubecoins
+  join_org_url: "https://git.k8s.io/community/community-membership.md#member"
+  only_org_members: true
+
+approve:
+- repos:
+  - kubecoins/test-infra
+  lgtm_acts_as_approve: true
+  require_self_approval: true
+
+config_updater:
+  maps:
+    config/config.yaml:
+      name: config
+    config/plugins.yaml:
+      name: plugins
+    config/jobs/**/*.yaml:
+      name: job-config
+      gzip: true
+
+label:
+  additional_labels:
+    - kind/infra
+
+lgtm:
+- repos:
+  - kubecoins/test-infra
+  review_acts_as_lgtm: true
+  store_tree_hash: true
+
+blunderbuss:
+  max_request_count: 2
+  use_status_availability: true
+
+size:
+  s: 10
+  m: 30
+  l: 90
+  xl: 270
+  xxl: 520
+
+plugins:
+  kubecoins/test-infra:
+    - approve
+    - lgtm
+    - skip
+    - size
+    - welcome
+    - owners-label
+    - label
+    - trigger
