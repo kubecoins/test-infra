@@ -1,11 +1,9 @@
 presubmits:
   kubecoins/test-infra:
   - name: echo-hi
+    always_run: true
+    optional: false
     decorate: true
-    skip_report: false
-    agent: kubernetes
-    branches:
-      - ^main$
     spec:
       containers:
       - command:

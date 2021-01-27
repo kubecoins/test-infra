@@ -63,9 +63,9 @@ branch-protection:
   orgs:
     kubecoins:
       protect: true
-      required_status_checks:
-        contexts:
-          - dco
+      # required_status_checks:
+      #   contexts:
+      #     - dco
       exclude:
         - "^dependabot/" # don't protect branches created by dependabot
       repos:

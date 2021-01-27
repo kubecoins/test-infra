@@ -45,11 +45,18 @@ size:
 
 plugins:
   kubecoins/test-infra:
-    - approve
-    - lgtm
+    - approve # Allow OWNERS to /approve
+    - assign # Allow /assign and /cc
+    - blunderbuss  # Auto-assign people
+    - lgtm # Allow /lgtm
+    - help  # Support /help and /good-first-issue
+    - hold  # Support /hold to delay merge
     - skip
-    - size
+    - size # Auto-label size of PR
+    - trigger  # Allow people to configure CI jobs to /test
     - welcome
     - owners-label
     - label
-    - trigger
+    - verify-owners # Validates OWNERS file changes in PRs.
+    - wip  # Auto-hold PRs with WIP in title
+    - release-note
