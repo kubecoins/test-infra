@@ -60,3 +60,10 @@ plugins:
     - verify-owners # Validates OWNERS file changes in PRs.
     - wip  # Auto-hold PRs with WIP in title
     - release-note
+
+external_plugins:
+  kubecoins:
+  - name: needs-rebase
+    events:
+      - issue_comment
+      - pull_request

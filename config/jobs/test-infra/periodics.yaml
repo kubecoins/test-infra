@@ -1,0 +1,93 @@
+periodics:
+- cron: "*/30 * * * *"  # Every 30 mins
+  name: test-infra-label-sync
+  #cluster: test-infra-trusted
+  labels:
+    app: label-sync
+  decorate: true
+  spec:
+    containers:
+    - name: label-sync
+      image: gcr.io/k8s-prow/label_sync:v20210127-5fd357428d
+      command:
+      - /app/label_sync/app.binary
+      args:
+      - --config=/etc/config/labels.yaml
+      - --confirm=true
+      - --orgs=kubecoins
+      - --token=/etc/github/oauth
+      - --endpoint=http://ghproxy.default.svc.cluster.local
+      - --endpoint=https://api.github.com
+      - --debug
+      volumeMounts:
+      - name: oauth
+        mountPath: /etc/github
+        readOnly: true
+      - name: config
+        mountPath: /etc/config
+        readOnly: true
+    volumes:
+    - name: oauth
+      secret:
+        secretName: oauth-token
+    - name: config
+      configMap:
+        name: label-config
+  annotations:
+    testgrid-num-failures-to-alert: '6'
+    testgrid-alert-stale-results-hours: '12'
+    #testgrid-dashboards: sig-testing-misc
+    testgrid-tab-name: label_sync
+    #testgrid-alert-email: kubernetes-sig-testing-alerts@googlegroups.com, k8s-infra-oncall@google.com
+    description: Runs label_sync to synchronize GitHub repo labels with the label config defined in config/labels.yaml.
+- interval: 1h #24h
+  name: test-infra-peribolos
+  #cluster: test-infra-trusted
+  labels:
+    app: peribolos
+  decorate: true
+  max_concurrency: 1
+  spec:
+    containers:
+    - name: peribolos
+      image: gcr.io/k8s-prow/peribolos:v20210127-5fd357428d
+      # command:
+      # - /app/peribolos/app.binary
+      args:
+      - --min-admins=2
+      - --require-self
+      - --maximum-removal-delta=0.25
+      - --config-path=/etc/config/org.yaml
+      - --confirm=false
+      - --github-token-path=/etc/github/oauth
+      - --endpoint=http://ghproxy.default.svc.cluster.local
+      - --endpoint=https://api.github.com
+      - --log-level=debug
+      - --fix-org
+      - --fix-org-members
+      - --fix-teams
+      - --fix-team-members
+      - --fix-team-repos
+      - --fix-repos
+      #- --confirm
+      volumeMounts:
+      - name: oauth
+        mountPath: /etc/github
+        readOnly: true
+      - name: config
+        mountPath: /etc/config
+        readOnly: true
+    volumes:
+    - name: oauth
+      secret:
+        secretName: oauth-token
+    - name: config
+      configMap:
+        name: org-config
+  annotations:
+    testgrid-num-failures-to-alert: '6'
+    testgrid-alert-stale-results-hours: '12'
+    #testgrid-dashboards: sig-testing-misc
+    testgrid-tab-name: ci-peribolos
+    #testgrid-alert-email: kubernetes-sig-testing-alerts@googlegroups.com, k8s-infra-oncall@google.com
+    description: Runs peribolos to synchronize GitHub Org with the org config defined in config/org.yaml.

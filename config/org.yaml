@@ -1,0 +1,40 @@
+orgs:
+  kubecoins:
+    name: kubecoins
+    description: Org for kubecoins
+    default_repository_permission: read
+    has_organization_projects: true
+    has_repository_projects: true
+    members_can_create_repositories: false
+    billing_email: richard@weave.works
+    admins:
+    - kubecoins-bot
+    - richardcase
+    # members:
+    # - 
+    teams:
+      bots:
+        description: Bot Service Accounts for kubecoins
+        members:
+        - kubecoins-bot
+        privacy: closed
+      # TODO: use merge to manage teams separatelys perhaps?
+      test-infra-admins:
+        description: admin access to test-infra
+        maintainers:
+        - richardcase
+        - kubecoins-bot
+        privacy: closed
+        repos:
+          test-infra: admin
+      test-infra-maintainers:
+        description: write access to test-infra
+        maintainers:
+        - richardcase
+        - kubecoins-bot
+        privacy: closed
+    repos:
+      test-infra:
+        default_branch: main
+        has_projects: true
+
