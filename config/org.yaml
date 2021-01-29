@@ -37,4 +37,7 @@ orgs:
       test-infra:
         default_branch: main
         has_projects: true
+      hasher:
+        default_branch: main
+        has_projects: true
 
