@@ -2,7 +2,7 @@
 ---
 triggers:
 - repos:
-  - kubecoins
+  - kubecoins/test-infra
   join_org_url: "https://github.com/kubecoins/test-infra/blob/main/README.md"
   only_org_members: true
 
