@@ -7,10 +7,10 @@ triggers:
   only_org_members: true
 
 approve:
-- repos:
-  - kubecoins/test-infra
-  lgtm_acts_as_approve: true
-  require_self_approval: true
+  - repos:
+      - kubecoins/test-infra
+    lgtm_acts_as_approve: true
+    require_self_approval: true
 
 config_updater:
   maps:
