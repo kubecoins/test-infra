@@ -51,8 +51,8 @@ periodics:
     containers:
     - name: peribolos
       image: gcr.io/k8s-prow/peribolos:v20210127-5fd357428d
-      # command:
-      # - /app/peribolos/app.binary
+      command:
+      - /app/prow/cmd/peribolos/app.binary
       args:
       - --min-admins=2
       - --require-self
@@ -60,8 +60,8 @@ periodics:
       - --config-path=/etc/config/org.yaml
       - --confirm=false
       - --github-token-path=/etc/github/oauth
-      - --endpoint=http://ghproxy.default.svc.cluster.local
-      - --endpoint=https://api.github.com
+      - --github-endpoint=http://ghproxy.default.svc.cluster.local
+      - --github-endpoint=https://api.github.com
       - --log-level=debug
       - --fix-org
       - --fix-org-members
@@ -69,7 +69,7 @@ periodics:
       - --fix-team-members
       - --fix-team-repos
       - --fix-repos
-      #- --confirm
+      - --confirm
       volumeMounts:
       - name: oauth
         mountPath: /etc/github
