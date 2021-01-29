@@ -1,0 +1,16 @@
+presubmits:
+  kubecoins/test-infra:
+  - name: echo-hi
+    always_run: true
+    optional: false
+    decorate: true
+    spec:
+      containers:
+      - command:
+        - echo
+        - "Prow Works"
+        env:
+        - name: AWS_REGION
+          value: eu-west-2
+        image: debian:buster
+        imagePullPolicy: Always

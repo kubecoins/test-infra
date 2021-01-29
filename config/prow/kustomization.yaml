@@ -15,7 +15,6 @@ resources:
 - ./bases/plank
 - ./bases/prow
 - ./bases/pushgateway
-- ./bases/saymyname
 - ./bases/sinker
 - ./bases/statusreconciler
 - ./bases/tide

@@ -24,10 +24,11 @@ plank:
   report_templates:
     '*': '[Full PR test history](http://prow.kubecoins.com/pr-history?org={{.Spec.Refs.Org}}&repo={{.Spec.Refs.Repo}}&pr={{with index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}). Please help us cut down on flakes by [linking to](https://git.k8s.io/community/contributors/devel/sig-testing/flaky-tests.md#filing-issues-for-flaky-tests) an [open issue](https://github.com/{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}}/issues?q=is:issue+is:open) when you hit one in your PR.'
   max_concurrency: 100 # Limit of concurrent ProwJobs. Need to be adjusted depending of the cluster size.
+  allow_cancellations: true # AllowCancellations enables aborting presubmit jobs for commits that have been superseded by newer commits in Github pull requests.
   pod_pending_timeout: 60m
   default_decoration_configs:
     '*':
-      timeout: 24h # Up to 12 hours for driverkit builder jobs
+      timeout: 3h 
       grace_period: 10m
       utility_images:
         clonerefs: "gcr.io/k8s-prow/clonerefs:v20210108-eac8059329"
@@ -61,16 +62,16 @@ branch-protection:
     strict: false # we don't want to block any PR if it's not up to date, we have the rebase merge strategy and needs-rebase plugin
   orgs:
     kubecoins:
-      protect: true
-      required_status_checks:
-        contexts:
-          - dco
+      #protect: true - apply to all branches
+      # required_status_checks:
+      #   contexts:
+      #     - dco
       exclude:
         - "^dependabot/" # don't protect branches created by dependabot
       repos:
         test-infra:
           branches:
-            master:
+            main:
               protect: true
 
 log_level: debug
@@ -81,21 +82,22 @@ in_repo_config:
     "*": true
 
 tide:
-  context_options:
-    skip-unknown-contexts: true
-    from-branch-protection: true
-  merge_method:
-    kubecoins/test-infra: rebase
+  sync_period: 2m
+  # context_options:
+  #   skip-unknown-contexts: true
+  #   from-branch-protection: true
+  # merge_method:
+  #   kubecoins/test-infra: rebase
   queries:
     - repos:
         - kubecoins/test-infra
       labels:
         - approved
         - lgtm
-        - "dco-signoff: yes"
       missingLabels:
         - do-not-merge
         - do-not-merge/hold
         - do-not-merge/invalid-owners-file
         - do-not-merge/work-in-progress
         - needs-rebase
+        - do-not-merge/release-note-label-needed

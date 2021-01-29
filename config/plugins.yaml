@@ -3,7 +3,7 @@
 triggers:
 - repos:
   - kubecoins
-  join_org_url: "https://git.k8s.io/community/community-membership.md#member"
+  join_org_url: "https://github.com/kubecoins/test-infra/blob/main/README.md"
   only_org_members: true
 
 approve:
@@ -45,11 +45,25 @@ size:
 
 plugins:
   kubecoins/test-infra:
-    - approve
-    - lgtm
+    - approve # Allow OWNERS to /approve
+    - assign # Allow /assign and /cc
+    - blunderbuss  # Auto-assign people
+    - lgtm # Allow /lgtm
+    - help  # Support /help and /good-first-issue
+    - hold  # Support /hold to delay merge
     - skip
-    - size
+    - size # Auto-label size of PR
+    - trigger  # Allow people to configure CI jobs to /test
     - welcome
     - owners-label
     - label
-    - trigger
+    - verify-owners # Validates OWNERS file changes in PRs.
+    - wip  # Auto-hold PRs with WIP in title
+    - release-note
+
+external_plugins:
+  kubecoins:
+  - name: needs-rebase
+    events:
+      - issue_comment
+      - pull_request

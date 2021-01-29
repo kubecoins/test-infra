@@ -14,6 +14,8 @@ github-oauth-config: secrets
 
 oauth-token: secrets
 	kubectl create secret generic oauth-token --from-file=oauth=./out/oauth-token --dry-run=client -o yaml | kubectl replace secret oauth-token -f -
+	kubectl -n test-pods create secret generic oauth-token --from-file=oauth=./out/oauth-token --dry-run=client -o yaml | kubectl -n test-pods replace secret oauth-token -f -
+
 
 cookie: secrets
 	kubectl create secret generic cookie --from-file=secret=./out/cookie.txt --dry-run=client -o yaml | kubectl replace secret cookie -f -
@@ -27,12 +29,24 @@ plugins:
 update-config:
 	kubectl create configmap config --from-file=config.yaml=config/config.yaml --dry-run=client -o yaml | kubectl replace configmap config -f -
 
+update-labels:
+	kubectl -n test-pods create configmap label-config --from-file=labels.yaml=config/labels.yaml --dry-run=client -o yaml | kubectl -n test-pods replace configmap label-config -f -
+
+update-org:
+	kubectl -n test-pods create configmap org-config --from-file=org.yaml=config/org.yaml --dry-run=client -o yaml | kubectl -n test-pods replace configmap org-config -f -
+
+
+
 prow:
 	kustomize build config/prow | envsubst > out/prow.yaml
 	kubectl apply -f out/prow.yaml
 
 prow-s3-credentials:
 	kubectl create secret generic s3-credentials --from-file=service-account.json=./out/service-account.json --dry-run=client -o yaml | kubectl replace secret s3-credentials -f -
+
+prow-s3-credentials-test-pods:
+	kubectl -n test-pods create secret generic s3-credentials --from-file=service-account.json=./out/service-account.json --dry-run=client -o yaml | kubectl -n test-pods replace secret s3-credentials -f -
+	
 
 
 #### Terraform #####
