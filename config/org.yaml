@@ -32,6 +32,7 @@ orgs:
         maintainers:
         - richardcase
         - kubecoins-bot
+        - multipleinheritance
         privacy: closed
     repos:
       test-infra:
