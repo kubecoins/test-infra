@@ -6,12 +6,6 @@ triggers:
   join_org_url: "https://github.com/kubecoins/test-infra/blob/main/README.md"
   only_org_members: true
 
-approve:
-  - repos:
-      - kubecoins/test-infra
-    lgtm_acts_as_approve: true
-    require_self_approval: true
-
 config_updater:
   maps:
     config/config.yaml:
@@ -32,6 +26,13 @@ lgtm:
   review_acts_as_lgtm: true
   store_tree_hash: true
 
+approve:
+- repos:
+  - kubecoins/test-infra
+  require_self_approval: true
+  ignore_review_state: true
+  lgtm_acts_as_approve: true
+
 blunderbuss:
   max_request_count: 2
   use_status_availability: true
@@ -45,21 +46,21 @@ size:
 
 plugins:
   kubecoins/test-infra:
-    - approve # Allow OWNERS to /approve
-    - assign # Allow /assign and /cc
-    - blunderbuss  # Auto-assign people
-    - lgtm # Allow /lgtm
-    - help  # Support /help and /good-first-issue
-    - hold  # Support /hold to delay merge
-    - skip
-    - size # Auto-label size of PR
-    - trigger  # Allow people to configure CI jobs to /test
-    - welcome
-    - owners-label
-    - label
-    - verify-owners # Validates OWNERS file changes in PRs.
-    - wip  # Auto-hold PRs with WIP in title
-    - release-note
+  - approve # Allow OWNERS to /approve
+  - assign # Allow /assign and /cc
+  - blunderbuss  # Auto-assign people
+  - lgtm # Allow /lgtm
+  - help  # Support /help and /good-first-issue
+  - hold  # Support /hold to delay merge
+  - skip
+  - size # Auto-label size of PR
+  - trigger  # Allow people to configure CI jobs to /test
+  - welcome
+  - owners-label
+  - label
+  - verify-owners # Validates OWNERS file changes in PRs.
+  - wip  # Auto-hold PRs with WIP in title
+  - release-note
 
 external_plugins:
   kubecoins:
