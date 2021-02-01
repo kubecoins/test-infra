@@ -8,22 +8,22 @@ orgs:
     members_can_create_repositories: false
     billing_email: richard@weave.works
     admins:
-    - kubecoins-bot
+    - kubecoins-kryten
     - richardcase
-    # members:
-    # - 
+    members:
+    - multipleinheritance
     teams:
       bots:
         description: Bot Service Accounts for kubecoins
         members:
-        - kubecoins-bot
+        - kubecoins-kryten
         privacy: closed
       # TODO: use merge to manage teams separatelys perhaps?
       test-infra-admins:
         description: admin access to test-infra
         maintainers:
         - richardcase
-        - kubecoins-bot
+        - kubecoins-kryten
         privacy: closed
         repos:
           test-infra: admin
@@ -31,7 +31,7 @@ orgs:
         description: write access to test-infra
         maintainers:
         - richardcase
-        - kubecoins-bot
+        - kubecoins-kryten
         - multipleinheritance
         privacy: closed
     repos:
