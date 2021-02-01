@@ -23,7 +23,7 @@ orgs:
         description: admin access to test-infra
         maintainers:
         - richardcase
-        - kubecoins-bot
+        - kubecoins-kryten
         privacy: closed
         repos:
           test-infra: admin
@@ -31,7 +31,7 @@ orgs:
         description: write access to test-infra
         maintainers:
         - richardcase
-        - kubecoins-bot
+        - kubecoins-kryten
         - multipleinheritance
         privacy: closed
     repos:
