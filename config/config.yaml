@@ -16,6 +16,7 @@ deck:
           name: podinfo
         required_files:
           - podinfo.json
+  tide_update_period: 1s
 
 plank:
   job_url_template: 'http://prow.kubecoins.com/view/s3/kubecoins-prow-logs/{{if eq .Spec.Type "presubmit"}}pr-logs/pull{{else if eq .Spec.Type "batch"}}pr-logs/pull{{else}}logs{{end}}{{if .Spec.Refs}}{{if ne .Spec.Refs.Org ""}}/{{.Spec.Refs.Org}}_{{.Spec.Refs.Repo}}{{end}}{{end}}{{if eq .Spec.Type "presubmit"}}/{{with index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}{{else if eq .Spec.Type "batch"}}/batch{{end}}/{{.Spec.Job}}/{{.Status.BuildID}}/'
@@ -28,7 +29,7 @@ plank:
   pod_pending_timeout: 60m
   default_decoration_configs:
     '*':
-      timeout: 3h 
+      timeout: 2h 
       grace_period: 10m
       utility_images:
         clonerefs: "gcr.io/k8s-prow/clonerefs:v20210108-eac8059329"
@@ -44,37 +45,32 @@ sinker:
   resync_period: 1m
   max_prowjob_age: 48h
   max_pod_age: 24h
-  terminated_pod_ttl: 2h
+  terminated_pod_ttl: 30m
 
 branch-protection:
-  enforce_admins: true # rules apply to admins too!
-  restrictions: # restrict who can push
-    teams: ["maintainers", "machine_users"]
-  required_pull_request_reviews:
-    dismiss_stale_reviews: true # automat dismiss old reviews
-    dismissal_restrictions: # allow review dismissals
-      teams:
-        - maintainers
-        - machine_users
-    require_code_owner_reviews: true # require a code owner approval
-    required_approving_review_count: 1 # number of approvals
-  required_status_checks:
-    strict: false # we don't want to block any PR if it's not up to date, we have the rebase merge strategy and needs-rebase plugin
-    contexts:
-    - tide
+  # enforce_admins: true # rules apply to admins too!
+  # restrictions: # restrict who can push
+  #   teams: ["maintainers", "machine_users"]
+  # required_pull_request_reviews:
+  #   dismiss_stale_reviews: true # automat dismiss old reviews
+  #   dismissal_restrictions: # allow review dismissals
+  #     teams:
+  #       - maintainers
+  #       - machine_users
+  #   require_code_owner_reviews: true # require a code owner approval
+  #   required_approving_review_count: 1 # number of approvals
+  # required_status_checks:
+  #   strict: false # we don't want to block any PR if it's not up to date, we have the rebase merge strategy and needs-rebase plugin
+  #   contexts:
+  #   - tide
   orgs:
     kubecoins:
-      #protect: true - apply to all branches
-      required_status_checks:
-         contexts:
-           - tide
+      protect: true # apply to all branches
+      # required_status_checks:
+      #    contexts:
+      #      - cla/linuxfoundation
       exclude:
         - "^dependabot/" # don't protect branches created by dependabot
-      repos:
-        test-infra:
-          branches:
-            main:
-              protect: true
 
 log_level: debug
 pod_namespace: test-pods
@@ -85,21 +81,25 @@ in_repo_config:
 
 tide:
   sync_period: 2m
-  # context_options:
-  #   skip-unknown-contexts: true
-  #   from-branch-protection: true
-  # merge_method:
-  #   kubecoins/test-infra: rebase
   queries:
-    - repos:
-        - kubecoins/test-infra
-      labels:
-        - approved
-        - lgtm
-      missingLabels:
-        - do-not-merge
-        - do-not-merge/hold
-        - do-not-merge/invalid-owners-file
-        - do-not-merge/work-in-progress
-        - needs-rebase
-        - do-not-merge/release-note-label-needed
+  - orgs:
+    - kubecoins
+    labels:
+    - approved
+    - lgtm
+    missingLabels:
+    - do-not-merge
+    - do-not-merge/hold
+    - do-not-merge/invalid-owners-file
+    - do-not-merge/work-in-progress
+    - needs-rebase
+    - do-not-merge/release-note-label-needed
+  blocker_label: tide/merge-blocker
+  squash_label: tide/merge-method-squash
+  rebase_label: tide/merge-method-rebase
+  merge_label: tide/merge-method-merge\
+
+github_reporter:
+  job_types_to_report:
+  - presubmit
+  - postsubmit
