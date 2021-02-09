@@ -5,6 +5,7 @@ resources:
 - namespace.yaml
 - ./bases/cert-manager
 - ./bases/cluster-autoscaler
+- ./bases/external-dns
 - ./bases/ghproxy
 - ./bases/config
 - ./bases/crier
