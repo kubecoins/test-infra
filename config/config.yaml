@@ -48,27 +48,27 @@ sinker:
   terminated_pod_ttl: 30m
 
 branch-protection:
-  # enforce_admins: true # rules apply to admins too!
-  # restrictions: # restrict who can push
-  #   teams: ["maintainers", "machine_users"]
-  # required_pull_request_reviews:
-  #   dismiss_stale_reviews: true # automat dismiss old reviews
-  #   dismissal_restrictions: # allow review dismissals
-  #     teams:
-  #       - maintainers
-  #       - machine_users
-  #   require_code_owner_reviews: true # require a code owner approval
-  #   required_approving_review_count: 1 # number of approvals
-  # required_status_checks:
-  #   strict: false # we don't want to block any PR if it's not up to date, we have the rebase merge strategy and needs-rebase plugin
-  #   contexts:
-  #   - tide
+  enforce_admins: false # rules apply to admins too!
+  #restrictions: # restrict who can push
+  #  teams: ["maintainers", "machine_users"]
+  required_pull_request_reviews:
+    dismiss_stale_reviews: true # automat dismiss old reviews
+  #  dismissal_restrictions: # allow review dismissals
+  #    teams:
+  #      - maintainers
+  #      - machine_users
+    require_code_owner_reviews: true # require a code owner approval
+    required_approving_review_count: 1 # number of approvals
+  required_status_checks:
+    strict: false # we don't want to block any PR if it's not up to date, we have the rebase merge strategy and needs-rebase plugin
+  #  contexts:
+  #  - tide
   orgs:
     kubecoins:
-      protect: true # apply to all branches
-      # required_status_checks:
-      #    contexts:
-      #      - cla/linuxfoundation
+      protect: true #- apply to all branches
+      #required_status_checks:
+      #   contexts:
+      #     - tide
       exclude:
         - "^dependabot/" # don't protect branches created by dependabot
 

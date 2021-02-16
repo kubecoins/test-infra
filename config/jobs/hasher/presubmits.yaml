@@ -1,0 +1,16 @@
+presubmits:
+  kubecoins/hasher:
+  - name: hasher-test
+    always_run: true
+    optional: false
+    decorate: true
+    spec:
+      containers:
+      - command:
+        - echo
+        - "Add hasher CI tests"
+        env:
+        - name: AWS_REGION
+          value: eu-west-2
+        image: debian:buster
+        imagePullPolicy: Always
