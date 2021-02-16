@@ -18,7 +18,7 @@ orgs:
         members:
         - kubecoins-kryten
         privacy: closed
-      # TODO: use merge to manage teams separatelys perhaps?
+      # TODO: use 'merge' to manage teams separately perhaps?
       test-infra-admins:
         description: admin access to test-infra
         maintainers:
