@@ -2,6 +2,8 @@ presubmits:
   kubecoins/docs:
   - name: pull-docs-build-test
     always_run: true
+    skip_branches:
+    - gh-pages
     optional: false
     decorate: true
     spec:
