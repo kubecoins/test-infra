@@ -33,10 +33,21 @@ orgs:
         - richardcase
         - kubecoins-kryten
         privacy: closed
+      docs-admins:
+        description: admin access to docs
+        maintainers:
+        - richardcase
+        - kubecoins-kryten
+        privacy: closed
+        repos:
+          docs: admin
     repos:
       test-infra:
         default_branch: main
         has_projects: true
+      docs:
+        default_branch: main
+        has_projects: false
       hasher:
         default_branch: main
         has_projects: true
