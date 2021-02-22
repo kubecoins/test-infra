@@ -71,6 +71,10 @@ branch-protection:
       #     - tide
       exclude:
         - "^dependabot/" # don't protect branches created by dependabot
+      repos:
+        docs:
+          branches:
+            protect: false
 
 log_level: debug
 pod_namespace: test-pods
