@@ -1,0 +1,11 @@
+presubmits:
+  kubecoins/docs:
+  - name: pull-docs-build-test
+    always_run: true
+    optional: false
+    decorate: true
+    spec:
+      containers:
+      - image: gcr.io/k8s-testimages/kubekins-e2e:v20210217-8c72491-1.19
+        command:
+        - "make docs-build"
