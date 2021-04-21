@@ -42,7 +42,7 @@ size:
   m: 30
   l: 90
   xl: 350
-  xxl: 650
+  xxl: 700
 
 plugins:
   kubecoins/test-infra:
